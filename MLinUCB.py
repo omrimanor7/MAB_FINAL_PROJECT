@@ -24,7 +24,7 @@ class MLinUCB:
         self.b = np.zeros(self.c)
         self.k = num_of_arms
         self.missing_rewords_probability = missing_rewords_probability
-        self.A = np.repeat(self.b.dot(self.b.T), self.c)
+        self.A = np.stack([np.identity(self.c) for _ in range(self.k)], axis=0)
         self.r = np.zeros(self.T)
         self.m = m
         print("\nMLinUCB successfully initialized.")
