@@ -8,6 +8,8 @@ REMOVED = -1
 
 def parse_dataset_to_mat(file_name, class_index):
     dataset = np.loadtxt(file_name, delimiter=",", skiprows=1)
+    if file_name == "ad.data":
+        dataset = dataset[~np.any(dataset == '?', axis=1)]
     y = np.transpose(dataset)[class_index, :]
     X = np.delete(dataset, class_index, axis=1)
     return X, y
