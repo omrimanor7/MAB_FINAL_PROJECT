@@ -27,13 +27,15 @@ class MLinUCB:
         self.b = np.stack([np.zeros(self.c) for _ in range(self.k)], axis=0)
         self.r = np.zeros(self.T)
         self.m = m
-        print("\nMLinUCB successfully initialized.")
+        self.remove_rewords()
+        print("MLinUCB successfully initialized.")
 
 
     def remove_rewords(self):
         ind = np.arange(self.T)
         removed_indices = np.random.choice(ind, self.T*self.missing_rewords_probability, replace=False)
         np.put(self.y, removed_indices, REMOVED)
+        print(self.y)
 
 
     def compute_reward(self, t, a_t):
