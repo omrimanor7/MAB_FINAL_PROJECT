@@ -50,7 +50,7 @@ class MLinUCB:
         b = self.b
         p_t = np.zeros(self.k)
 
-        for a in self.k:  # iterate over all arms
+        for a in range(self.k):  # iterate over all arms
             A_a_inv = np.linalg.inv(A[a])
             theta_a = A_a_inv.dot(b[a])
             p_t[a] = theta_a.T.dot(x_t) + self.alpha * np.sqrt(x_t.T.dot(A_a_inv).dot(x_t))
