@@ -124,9 +124,8 @@ class MLinUCB:
         r = self.r[:t]
         visualizer = KElbowVisualizer(KMeans(), k=20, metric='calinski_harabasz', timings=False)
         visualizer.fit(X_t)  # Fit the data to the visualizer
-        print(type(visualizer))
         N = visualizer.elbow_value_
-        print(N)
+        print("N is", N)
         kmeans = KMeans(n_clusters=N, random_state=0).fit(X_t)
 
         # calculate avg rewards and distance
