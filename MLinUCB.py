@@ -55,7 +55,7 @@ class MLinUCB:
             theta_a = A_a_inv.dot(b[a])
             p_t[a] = theta_a.T.dot(x_t) + self.alpha * np.sqrt(x_t.T.dot(A_a_inv).dot(x_t))
 
-        max_p_t = np.max(p_t)
+        max_p_t = np.nanmax(p_t)
         if max_p_t <= 0:
             print("User {} has max p_t={}, p_t={}".format(t, max_p_t, p_t))
 
@@ -139,7 +139,7 @@ class MLinUCB:
 
         # calculate reward
         m = self.m
-        mask = r_bar >= np.sort(d)[:m][-1]
+        mask = d >= np.sort(d)[:m][-1]
         r_m = r_bar[mask]
         d_m = d[mask]
 
