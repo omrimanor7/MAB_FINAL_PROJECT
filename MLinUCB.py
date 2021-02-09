@@ -138,7 +138,7 @@ class MLinUCB:
 
         # calculate reward
         m = self.m
-        mask = d >= np.sort(d)[:m][-1]
+        mask = d <= np.sort(d)[:m][-1]
         r_m = r_bar[mask]
         d_m = d[mask]
 
