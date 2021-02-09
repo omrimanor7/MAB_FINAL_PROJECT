@@ -35,8 +35,6 @@ class MLinUCB:
         ind = np.arange(self.T)
         removed_indices = np.random.choice(ind, int(np.floor(self.T*self.missing_rewords_probability)), replace=False)
         np.put(self.y, removed_indices, REMOVED)
-        print(self.y)
-
 
     def compute_reward(self, t, a_t):
         y_t = self.y[t]
@@ -122,7 +120,7 @@ class MLinUCB:
         # compute clusters
         X_t = self.X[:t, :]
         x_t = self.X[t, :]
-        r = self.r[:t, :]
+        r = self.r[:t]
         model = KMeans()
         visualizer = KElbowVisualizer(model, k=20, metric='calinski_harabasz', timings=False)
         visualizer.fit(X_t)  # Fit the data to the visualizer
