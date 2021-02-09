@@ -64,7 +64,6 @@ class MLinUCB:
         # randomly break ties, np.argmax return the first occurrence of maximum.
         # So I will get all occurrences of the max and randomly select between them
         max_idxs = np.argwhere(p_t == max_p_t).flatten()
-        print(max_idxs)
         a_t = np.random.choice(max_idxs) # a_t should be 1<= a_t <=k
 
         # observed reward = 1/0
