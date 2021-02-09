@@ -91,7 +91,10 @@ class MLinUCB:
 
         for t in range(self.T):
             start_time_t = time.time()
-            rewards.append(self.choose_arm(t, verbosity))
+            reward = self.choose_arm(t, verbosity)
+            if not 0 < reward < 1:
+                # not missing
+                rewards.append(reward)
             time_t = time.time() - start_time_t
             time_per_action.append(time_t)
             #if verbosity >= 2:
