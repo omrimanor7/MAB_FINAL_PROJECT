@@ -31,9 +31,9 @@ class MLinUCB:
         print("MLinUCB successfully initialized.")
 
 
-    def remove_rewords(self):
+    def remove_rewords(self, index_to_miss_from=20):
         ind = np.arange(self.T)
-        removed_indices = np.random.choice(ind[20:], int(np.floor(self.T*self.missing_rewords_probability)), replace=False)
+        removed_indices = np.random.choice(ind[index_to_miss_from:], int(np.floor(self.T * self.missing_rewords_probability)), replace=False)
         np.put(self.y, removed_indices, REMOVED)
 
     def compute_reward(self, t, a_t):
