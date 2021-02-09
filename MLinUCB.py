@@ -1,10 +1,10 @@
 import numpy as np
 import time
 from sklearn.cluster import KMeans
-from sklearn import metrics
 from yellowbrick.cluster import KElbowVisualizer
 
 REMOVED = -1
+
 
 def parse_dataset_to_mat(file_name, class_index):
     dataset = np.loadtxt(file_name, delimiter=",", skiprows=1)
@@ -41,7 +41,7 @@ class MLinUCB:
         if y_t == REMOVED:
             return self.compute_missing_reward(t)
         else:
-            return y_t == a_t + 1
+            return y_t == (a_t + 1)
 
 
     def choose_arm(self, t, verbosity):
@@ -68,11 +68,10 @@ class MLinUCB:
         r_t = self.compute_reward(t, a_t)
         self.r[t] = r_t
 
-        if verbosity >= 2:
-            print("User {} choosing item {} with p_t={} reward {}".format(t, a_t, p_t[a_t], r_t))
+        #if verbosity >= 2:
+            #print("User {} choosing item {} with p_t={} reward {}".format(t, a_t, p_t[a_t], r_t))
 
         # update
-        # TODO
         x_t_at = x_t
         A[a_t] = A[a_t] + x_t_at.dot(x_t_at.T)
         b[a_t] = b[a_t] + r_t * x_t_at.flatten()  # turn it back into an array because b[a_t] is an array
@@ -93,9 +92,9 @@ class MLinUCB:
             rewards.append(self.choose_arm(t, verbosity))
             time_t = time.time() - start_time_t
             time_per_action.append(time_t)
-            if verbosity >= 2:
-                print("Choosing arm for user {}/{} ended with reward {} in {}s".format(
-                    t, self.X[t], rewards[t], time_t))
+            #if verbosity >= 2:
+                #print("Choosing arm for user {}/{} ended with reward {} in {}s".format(
+                    #t, self.X[t], rewards[t], time_t))
 
         total_time = time.time() - start_time
         avg_reward = np.average(np.array(rewards))
@@ -112,10 +111,7 @@ class MLinUCB:
         avg_rewards = np.zeros(shape=(num_epochs,), dtype=float)
         for i in range(num_epochs):
             avg_rewards[i], total_time = self.run_epoch()
-
-            if verbosity >= 1:
-                print(
-                    "Finished epoch {}/{} with avg reward {} in {}s".format(i, num_epochs, avg_rewards[i], total_time))
+            print("Finished epoch {}/{} with avg reward {} in {}s".format(i, num_epochs, avg_rewards[i], total_time))
 
         return avg_rewards
 
@@ -129,6 +125,7 @@ class MLinUCB:
         visualizer = KElbowVisualizer(model, k=20, metric='calinski_harabasz', timings=False)
         visualizer.fit(X_t)  # Fit the data to the visualizer
         N = visualizer.elbow_value_
+        print(N)
         kmeans = KMeans(n_clusters=N, random_state=0).fit(X_t)
 
         # calculate avg rewards and distance
@@ -145,5 +142,3 @@ class MLinUCB:
         r_m = r_bar[mask]
         d_m = d[mask]
         return np.sum(r_m/d_m)/np.sum(np.ones(N)/d_m)
-
-
