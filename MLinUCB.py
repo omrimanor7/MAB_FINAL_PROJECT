@@ -21,10 +21,10 @@ class MLinUCB:
         self.T = X.shape[0]
         self.alpha = alpha
         self.c = context_len
-        self.b = np.zeros(self.c)
         self.k = num_of_arms
         self.missing_rewords_probability = missing_rewords_probability
         self.A = np.stack([np.identity(self.c) for _ in range(self.k)], axis=0)
+        self.b = np.stack([np.zeros(self.c) for _ in range(self.k)], axis=0)
         self.r = np.zeros(self.T)
         self.m = m
         print("\nMLinUCB successfully initialized.")
@@ -41,7 +41,7 @@ class MLinUCB:
         if y_t == REMOVED:
             return self.compute_missing_reward(t)
         else:
-            return y_t == a_t
+            return y_t == a_t + 1
 
 
     def choose_arm(self, t, verbosity):
@@ -62,7 +62,7 @@ class MLinUCB:
         # randomly break ties, np.argmax return the first occurrence of maximum.
         # So I will get all occurrences of the max and randomly select between them
         max_idxs = np.argwhere(p_t == max_p_t).flatten()
-        a_t = np.random.choice(max_idxs) + 1  # a_t should be 1<= a_t <=k
+        a_t = np.random.choice(max_idxs) # a_t should be 1<= a_t <=k
 
         # observed reward = 1/0
         r_t = self.compute_reward(t, a_t)
