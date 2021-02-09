@@ -142,10 +142,4 @@ class MLinUCB:
         r_m = r_bar[mask]
         d_m = d[mask]
 
-        print(np.shape(r_m))
-        print(np.shape(d_m))
-        print(np.shape(np.ones(m)))
-        print(np.shape(np.sum(r_m/d_m)))
-        print(np.shape(np.sum(np.ones(m)/d_m)))
-
         return np.sum(r_m/d_m)/np.sum(np.ones(m)/d_m)
