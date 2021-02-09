@@ -33,7 +33,7 @@ class MLinUCB:
 
     def remove_rewords(self):
         ind = np.arange(self.T)
-        removed_indices = np.random.choice(ind, np.floor(self.T*self.missing_rewords_probability), replace=False)
+        removed_indices = np.random.choice(ind, int(np.floor(self.T*self.missing_rewords_probability)), replace=False)
         np.put(self.y, removed_indices, REMOVED)
         print(self.y)
 
