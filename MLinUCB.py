@@ -123,7 +123,7 @@ class MLinUCB:
         X_t = self.X[:t, :]
         x_t = self.X[t, :]
         r = self.r[:t]
-        visualizer = KElbowVisualizer(KMeans(), k=20, metric='silhouette', timings=False)
+        visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
         visualizer.fit(X_t)  # Fit the data to the visualizer
         N = visualizer.elbow_value_
         print("N is", N)
