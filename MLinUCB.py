@@ -33,7 +33,7 @@ class MLinUCB:
 
     def remove_rewords(self):
         ind = np.arange(self.T)
-        removed_indices = np.random.choice(ind, int(np.floor(self.T*self.missing_rewords_probability)), replace=False)
+        removed_indices = np.random.choice(ind[20:], int(np.floor(self.T*self.missing_rewords_probability)), replace=False)
         np.put(self.y, removed_indices, REMOVED)
 
     def compute_reward(self, t, a_t):
@@ -122,7 +122,7 @@ class MLinUCB:
         x_t = self.X[t, :]
         r = self.r[:t]
         model = KMeans()
-        visualizer = KElbowVisualizer(model, k=min(t, 20), metric='calinski_harabaz', timings=False)
+        visualizer = KElbowVisualizer(model, k=min(t-1, 20), metric='calinski_harabaz', timings=False)
         visualizer.fit(X_t)  # Fit the data to the visualizer
         N = visualizer.elbow_value_
         print(N)
