@@ -141,4 +141,11 @@ class MLinUCB:
         mask = r_bar >= np.sort(d)[:m][-1]
         r_m = r_bar[mask]
         d_m = d[mask]
-        return np.sum(r_m/d_m)/np.sum(np.ones(N)/d_m)
+
+        print(np.shape(r_m))
+        print(np.shape(d_m))
+        print(np.shape(np.ones(m)))
+        print(np.shape(np.sum(r_m/d_m)))
+        print(np.shape(np.sum(np.ones(m)/d_m)))
+
+        return np.sum(r_m/d_m)/np.sum(np.ones(m)/d_m)
