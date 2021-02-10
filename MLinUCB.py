@@ -103,7 +103,7 @@ class MLinUCB:
 
         total_time = time.time() - start_time
         avg_reward = np.average(np.array(rewards))
-        return avg_reward, total_time
+        return avg_reward, total_time, rewards
 
     def run(self, num_epochs, verbosity=1):
         """
@@ -115,10 +115,10 @@ class MLinUCB:
 
         avg_rewards = np.zeros(shape=(num_epochs,), dtype=float)
         for i in range(num_epochs):
-            avg_rewards[i], total_time = self.run_epoch()
+            avg_rewards[i], total_time, rewards = self.run_epoch()
             print("Finished epoch {}/{} with avg reward {} in {}s".format(i, num_epochs, avg_rewards[i], total_time))
 
-        return avg_rewards
+        return avg_rewards, rewards
 
     def compute_missing_reward(self, t):
 
