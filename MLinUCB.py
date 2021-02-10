@@ -127,10 +127,10 @@ class MLinUCB:
         X_t = self.X[:t, :]
         x_t = self.X[t, :]
         r = self.r[:t]
-        visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
-        visualizer.fit(X_t)  # Fit the data to the visualizer
-        N = visualizer.elbow_value_
-        self.N = N if N is not None else self.N
+        # visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
+        # visualizer.fit(X_t)  # Fit the data to the visualizer
+        # N = visualizer.elbow_value_
+        # self.N = N if N is not None else self.N
         # TODO
         N = 15
         print("N is", N)
