@@ -132,7 +132,7 @@ class MLinUCB:
         # N = visualizer.elbow_value_
         # self.N = N if N is not None else self.N
         # TODO
-        N = 15
+        N = 2
         print("N is", N)
         kmeans = KMeans(n_clusters=N, random_state=0).fit(X_t)
 
