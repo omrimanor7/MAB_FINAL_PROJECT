@@ -29,6 +29,7 @@ class MLinUCB:
         self.b = np.stack([np.zeros(self.c) for _ in range(self.k)], axis=0)
         self.r = np.zeros(self.T)
         self.m = m
+        self.N = 2
         self.remove_rewords()
         print("MLinUCB successfully initialized.")
 
@@ -129,6 +130,7 @@ class MLinUCB:
         visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
         visualizer.fit(X_t)  # Fit the data to the visualizer
         N = visualizer.elbow_value_
+        self.N = N if N is not None else self.N
         print("N is", N)
         kmeans = KMeans(n_clusters=N, random_state=0).fit(X_t)
 
