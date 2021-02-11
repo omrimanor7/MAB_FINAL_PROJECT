@@ -17,8 +17,8 @@ def parse_dataset_to_mat(file_name, class_index):
         dataset = dataset[~np.any(dataset == '   ?', axis=1)]
         dataset[dataset == 'ad.'] = 1
         dataset[dataset == 'nonad.'] = 2
-        dataset = dataset.astype(float)
 
+    dataset = dataset.astype(float)
     y = np.transpose(dataset)[class_index, :]
     X = np.delete(dataset, class_index, axis=1)
     return X, y
