@@ -17,7 +17,7 @@ def parse_dataset_to_mat(file_name, class_index):
 
 class MLinUCB:
 
-    def __init__(self, X, y, context_len, alpha, num_of_arms, m=1, missing_rewords_probability=0.25):
+    def __init__(self, X, y, context_len, alpha, num_of_arms, set_number_of_clusters, use_multiple_centers, m=1, N=2, missing_rewords_probability=0.25,):
         self.X = X
         self.y = y
         self.T = X.shape[0]
@@ -29,7 +29,9 @@ class MLinUCB:
         self.b = np.stack([np.zeros(self.c) for _ in range(self.k)], axis=0)
         self.r = np.zeros(self.T)
         self.m = m
-        self.N = 2
+        self.N = N
+        self.set_number_of_clusters = set_number_of_clusters
+        self.use_multiple_centers = use_multiple_centers
         self.remove_rewords()
         print("MLinUCB successfully initialized.")
 
@@ -127,12 +129,12 @@ class MLinUCB:
         X_t = self.X[:t, :]
         x_t = self.X[t, :]
         r = self.r[:t]
-        # visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
-        # visualizer.fit(X_t)  # Fit the data to the visualizer
-        # N = visualizer.elbow_value_
-        # self.N = N if N is not None else self.N
-        # TODO
-        N = 2
+        if not self.set_number_of_clusters:
+            visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
+            visualizer.fit(X_t)  # Fit the data to the visualizer
+            N = visualizer.elbow_value_
+            self.N = N if N is not None else self.N
+
         print("N is", N)
         kmeans = KMeans(n_clusters=N, random_state=0).fit(X_t)
 
@@ -146,6 +148,8 @@ class MLinUCB:
 
         # calculate reward
         m = self.m
+        if self.use_multiple_centers:
+            m = N
         mask = d <= np.sort(d)[:m][-1]
         r_m = r_bar[mask]
         d_m = d[mask]
