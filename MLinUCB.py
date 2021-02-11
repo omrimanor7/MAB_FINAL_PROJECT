@@ -26,7 +26,7 @@ def parse_dataset_to_mat(file_name, class_index):
 
 class MLinUCB:
 
-    def __init__(self, X, y, context_len, alpha, num_of_arms, set_number_of_clusters, use_multiple_centers, m=1, N=2, missing_rewords_probability=0.25,):
+    def __init__(self, X, y, context_len, alpha, num_of_arms, set_number_of_clusters, use_multiple_centers, m=1, N=2, missing_rewords_probability=0.25):
         self.X = X
         self.y = y
         self.T = X.shape[0]
