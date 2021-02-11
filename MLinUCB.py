@@ -2,14 +2,23 @@ import numpy as np
 import time
 from sklearn.cluster import KMeans
 from yellowbrick.cluster import KElbowVisualizer
+import os
 
 REMOVED = -1
 
 
 def parse_dataset_to_mat(file_name, class_index):
-    dataset = np.loadtxt(file_name, delimiter=",", skiprows=1)
+    dataset = np.loadtxt(file_name, dtype=str, delimiter=",", skiprows=1)
+    file_name = file_name.replace('MAB_FINAL_PROJECT/', '')
+    np.random.shuffle(dataset)
+
     if file_name == "ad.data":
         dataset = dataset[~np.any(dataset == '?', axis=1)]
+        dataset = dataset[~np.any(dataset == '   ?', axis=1)]
+        dataset[dataset == 'ad.'] = 1
+        dataset[dataset == 'nonad.'] = 2
+        dataset = dataset.astype(float)
+
     y = np.transpose(dataset)[class_index, :]
     X = np.delete(dataset, class_index, axis=1)
     return X, y
