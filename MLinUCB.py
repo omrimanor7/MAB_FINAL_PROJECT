@@ -139,7 +139,7 @@ class MLinUCB:
         x_t = self.X[t, :]
         r = self.r[:t]
         if not self.set_number_of_clusters:
-            visualizer = KElbowVisualizer(KMeans(), k=20, timings=False)
+            visualizer = KElbowVisualizer(KMeans(), k=(10, 20), timings=False)
             visualizer.fit(X_t)  # Fit the data to the visualizer
             N = visualizer.elbow_value_
             self.N = N if N is not None else self.N
